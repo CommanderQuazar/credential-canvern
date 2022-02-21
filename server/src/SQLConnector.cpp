@@ -4,6 +4,9 @@
 
 #include "../include/SQLConnector.h"
 
+/*
+ * Connect to your MySQL database
+ */
 SQLConnector& SQLConnector::connect()
 {
     mysql_init(&mysql);
@@ -27,6 +30,4 @@ SQLConnector &SQLConnector::disconnect()
     mysql_close(&mysql);
     return *this;
 }
-
-
 

@@ -9,7 +9,6 @@
 
 #include <iostream>
 
-
 class SQLConnector
 {
     public:

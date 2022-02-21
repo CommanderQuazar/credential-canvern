@@ -1,0 +1,17 @@
+cmake_minimum_required(VERSION 3.20)
+project(credential-cavern)
+
+include_directories(/usr/local/Cellar/mysql/8.0.28/include)
+include_directories(/usr/local/Cellar/mysql/8.0.28/lib)
+add_link_options(/usr/local/Cellar/mysql/8.0.28/lib/libmysqlclient.21.dylib)
+
+set(CMAKE_CXX_STANDARD 23)
+
+
+add_executable(credential-cavern include/SQLConnector.h src/SQLConnector.cpp src/User.cpp include/User.h
+        src/Favorites.cpp include/Favorites.h src/SessionLog.cpp include/SessionLog.h src/Records.cpp
+        include/Records.h src/RecordItem.cpp include/RecordItem.h test/tester.cpp)
+
+add_library(connectionlib SHARED src/User.cpp src/Favorites.cpp src/SessionLog.cpp
+        src/Records.cpp src/RecordItem.cpp src/SQLConnector.cpp)
+
