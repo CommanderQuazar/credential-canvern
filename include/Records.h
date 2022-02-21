@@ -8,9 +8,9 @@
 
 class Records
 {
-public:
+    public:
 
-private:
+    private:
 };
 
 

@@ -8,9 +8,9 @@
 
 class RecordItem
 {
-public:
+    public:
 
-private:
+    private:
 };
 
 

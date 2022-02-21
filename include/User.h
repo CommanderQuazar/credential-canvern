@@ -8,9 +8,9 @@
 
 class User
 {
-public:
+    public:
 
-private:
+    private:
 };
 
 

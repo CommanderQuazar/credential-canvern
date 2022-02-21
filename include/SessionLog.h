@@ -8,9 +8,9 @@
 
 class SessionLog
 {
-public:
+    public:
 
-private:
+    private:
 };
 
 

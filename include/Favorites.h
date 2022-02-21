@@ -8,9 +8,9 @@
 
 class Favorites
 {
-public:
+    public:
 
-private:
+    private:
 };
 
 
