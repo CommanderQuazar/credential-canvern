@@ -2,16 +2,21 @@
 // Created by Tobey Ragain on 2/20/22.
 //
 
-#ifndef CREDENTIAL_CAVERN_RECORDS_H
-#define CREDENTIAL_CAVERN_RECORDS_H
+#ifndef CREDENTIAL_CAVERN_SERVER_INCLUDE_RECORDS_H_
+#define CREDENTIAL_CAVERN_SERVER_INCLUDE_RECORDS_H_
 
 
-class Records
+#include "SqlConnector.h"
+
+class Records : protected SqlConnector
 {
+    using SqlConnector::_mysql;
     public:
+
+
 
     private:
 };
 
 
-#endif //CREDENTIAL_CAVERN_RECORDS_H
+#endif //CREDENTIAL_CAVERN_SERVER_INCLUDE_RECORDS_H_
