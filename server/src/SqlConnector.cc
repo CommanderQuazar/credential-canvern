@@ -16,14 +16,14 @@ SqlConnector& SqlConnector::connect()
                        _passwd  ->c_str(),
                        _db      ->c_str(),
                        _port,
-                       (_unix_socket == nullptr ? nullptr : _unix_socket->c_str()),
+                       _unix_socket == nullptr ? nullptr : _unix_socket->c_str(),
                        _client_flag);
     return *this;
 }
 
 /*
  * Closes the connection to MySQL database
- * The deconstrcutor will typically follow a call to this function
+ * The destructor will typically follow a call to this function
  */
 SqlConnector &SqlConnector::disconnect()
 {
