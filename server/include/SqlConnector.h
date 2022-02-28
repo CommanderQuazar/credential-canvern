@@ -21,6 +21,7 @@
 class SqlConnector
 {
     public:
+        SqlConnector() = delete;
         SqlConnector(std::string *  host_name,
                      std::string *  user_name,
                      std::string *  password,
@@ -37,10 +38,12 @@ class SqlConnector
             _client_flag    (client_f)
             { };
 
+        SqlConnector(SqlConnector& copy) = delete;
+
         SqlConnector&       connect();
-        inline std::string  stats() { return mysql_stat(&_mysql); };
-        inline bool         status() { return mysql_ping(&_mysql); };
-        inline MYSQL *      connection() { return &_mysql; };
+        inline std::string  stats()         const { return mysql_stat(&_mysql); };
+        inline bool         status()        const { return mysql_ping(&_mysql); };
+        inline MYSQL *      connection()    const { return &_mysql; };
         SqlConnector&       disconnect();
 
         ~SqlConnector() = default;

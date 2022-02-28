@@ -19,9 +19,9 @@ class UserAccount : User
             User(or_usern, or_passph)
             { };
 
-        UserAccount& reset_umane(const std::string& new_usern);
-        UserAccount& reset_pass(const std::string& new_passph);
-        void remove();
+        bool    reset_umane(const std::string& new_usern);
+        bool    reset_pass(const std::string& new_passph);
+        void    remove();
 
 };
 
