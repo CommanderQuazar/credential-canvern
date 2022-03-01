@@ -7,11 +7,11 @@
 
 #include "SqlConnector.h"
 
-typedef struct Credentials
+typedef struct
 {
-    std::string passphrase;
-    std::string password;
-};
+    std::string _passphrase;
+    std::string _password;
+} credentials_t;
 
 class User
 {
@@ -36,7 +36,7 @@ class User
             _entry_usern(std::move(username_entry)),
             _entry_passph(std::move(passph_entry))
             { };
-        Credentials& mysql_get_credentials();
+        credentials_t& mysql_get_credentials();
 
         //Stores the table ID of the logged in user
         unsigned int _u_table_id {0};

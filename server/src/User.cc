@@ -28,7 +28,7 @@ User &User::login()
  * If _u_table_id is zero, the contents of the Credential struct will be
  * empty. Otherwise the data will be returned
  */
-Credentials &User::mysql_get_credentials()
+credentials_t &User::mysql_get_credentials()
 {
 
 }
