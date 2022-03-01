@@ -15,7 +15,7 @@ class UserAccount : User
 
     public:
         UserAccount() = delete;
-        UserAccount(const std::string or_usern, const std::string or_passph) :
+        UserAccount(const std::string& or_usern, const std::string& or_passph) :
             User(or_usern, or_passph)
             { };
 

@@ -10,18 +10,18 @@
  *
  * If _u_table_id is equal to zero, it means the
  */
-UserAccount &UserAccount::reset_umane(const std::string& new_passph)
+bool UserAccount::reset_umane(const std::string& new_passph)
 {
-    return <#initializer#>;
+
 }
 
 /*
  * If the entered user credentials are confirmed the new password
  * will be updated in the user's account.
  */
-UserAccount &UserAccount::reset_pass(const std::string& new_passph)
+bool UserAccount::reset_pass(const std::string& new_passph)
 {
-    return <#initializer#>;
+
 }
 
 /*
