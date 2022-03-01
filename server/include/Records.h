@@ -8,13 +8,12 @@
 
 #include "SqlConnector.h"
 
-class Records : protected SqlConnector
+class Records
 {
     public:
 
-
-
     private:
+
 };
 
 

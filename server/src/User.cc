@@ -9,7 +9,7 @@
  */
 User &User::create()
 {
-    return <#initializer#>;
+
 }
 
 /*
@@ -20,7 +20,7 @@ User &User::create()
  */
 User &User::login()
 {
-    return <#initializer#>;
+
 }
 
 /*

@@ -7,11 +7,11 @@
 
 #include "SqlConnector.h"
 
-typedef struct
+typedef struct Credentials
 {
     std::string passphrase;
     std::string password;
-} Credentials;
+};
 
 class User
 {
@@ -19,7 +19,7 @@ class User
         User() = delete;
         User(SqlConnector * my_sql_connection, std::string username_entry,
              std::string passph_entry) :
-            _connection(my_sql_connection),
+            _server(my_sql_connection),
             _entry_usern(std::move(username_entry)),
             _entry_passph(std::move(passph_entry))
             { };
@@ -44,7 +44,7 @@ class User
         std::string _entry_passph;
 
     private:
-        SqlConnector * _connection;
+        SqlConnector * _server;
 
 };
 
