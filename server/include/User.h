@@ -5,16 +5,13 @@
 #ifndef CREDENTIAL_CAVERN_SERVER_INCLUDE_USER_H_
 #define CREDENTIAL_CAVERN_SERVER_INCLUDE_USER_H_
 
-#include <SqlConnector.h>
 #include "SqlConnector.h"
 
-#include <utility>
-
-typedef struct Credentials
+typedef struct
 {
     std::string passphrase;
     std::string password;
-};
+} Credentials;
 
 class User
 {
@@ -27,9 +24,9 @@ class User
             _entry_passph(std::move(passph_entry))
             { };
 
-        User& create();
-        User& login();
-        unsigned int get_user_id() const { return _u_table_id; };
+        User&           create();
+        User&           login();
+        unsigned int    get_user_id() const { return _u_table_id; };
 
         ~User() = default;
 

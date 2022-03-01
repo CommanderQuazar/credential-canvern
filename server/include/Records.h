@@ -10,7 +10,6 @@
 
 class Records : protected SqlConnector
 {
-    using SqlConnector::_mysql;
     public:
 
 
