@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.SCHEMA:cc_db</OriginalElement>
+  <nodes>
+    <node x="0.0" y="150.0">c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.TABLE:cc_db.Records</node>
+    <node x="526.3166666666667" y="564.0">c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.TABLE:cc_db.Favorites</node>
+    <node x="320.00000000000006" y="260.0">c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.TABLE:cc_db.UserConfig</node>
+    <node x="783.0" y="271.0">c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.TABLE:cc_db.SessionLog</node>
+    <node x="631.0" y="0.0">c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.TABLE:cc_db.Users</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.TABLE:cc_db.Favorites" target="c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.TABLE:cc_db.Users" relationship="REFERENCES">
+      <point x="33.25" y="-49.0" />
+      <point x="626.0666666666667" y="538.0" />
+      <point x="998.5" y="538.0" />
+      <point x="998.5" y="124.0" />
+      <point x="713.5" y="124.0" />
+      <point x="0.0" y="49.0" />
+    </edge>
+    <edge source="c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.TABLE:cc_db.Favorites" target="c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.TABLE:cc_db.Records" relationship="REFERENCES">
+      <point x="-33.25" y="-49.0" />
+      <point x="559.5666666666667" y="538.0" />
+      <point x="150.0" y="538.0" />
+      <point x="0.0" y="181.0" />
+    </edge>
+    <edge source="c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.TABLE:cc_db.Records" target="c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.TABLE:cc_db.Users" relationship="REFERENCES">
+      <point x="0.0" y="-181.0" />
+      <point x="150.0" y="124.0" />
+      <point x="713.5" y="124.0" />
+      <point x="0.0" y="49.0" />
+    </edge>
+    <edge source="c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.TABLE:cc_db.UserConfig" target="c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.TABLE:cc_db.Users" relationship="REFERENCES">
+      <point x="0.0" y="-71.0" />
+      <point x="541.5" y="124.0" />
+      <point x="713.5" y="124.0" />
+      <point x="0.0" y="49.0" />
+    </edge>
+    <edge source="c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.TABLE:cc_db.SessionLog" target="c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.TABLE:cc_db.Users" relationship="REFERENCES">
+      <point x="0.0" y="-60.0" />
+      <point x="885.5" y="124.0" />
+      <point x="713.5" y="124.0" />
+      <point x="0.0" y="49.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="499.5" y="331.0" />
+  <SelectedNodes>
+    <node>c2d704fb-c25f-4e02-99d4-d9a26adbc5d1.TABLE:cc_db.Records</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+  </Categories>
+</Diagram>
+
