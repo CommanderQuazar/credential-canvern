@@ -23,14 +23,5 @@ User &User::login()
 
 }
 
-/*
- * Gets the user's login credentials - primarily used by UserAccount class.
- * If _u_table_id is zero, the contents of the Credential struct will be
- * empty. Otherwise the data will be returned
- */
-credentials_t &User::mysql_get_credentials()
-{
-
-}
 
 

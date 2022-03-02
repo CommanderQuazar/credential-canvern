@@ -1,5 +1,5 @@
 //
-// Created by Tobey Ragain on 2/27/22.
+// Created by Tobey Ragain on 3/1/22.
 //
 
 #include "../include/UserAccount.h"
@@ -29,6 +29,16 @@ bool UserAccount::reset_pass(const std::string& new_passph)
  * the user table.
  */
 void UserAccount::remove()
+{
+
+}
+
+/*
+ * Gets the user's login credentials.
+ * If _u_table_id is zero, the contents of the pair will be
+ * empty. Otherwise the data will be returned
+ */
+std::pair<std::string, std::string> UserAccount::mysql_get_credentials()
 {
 
 }

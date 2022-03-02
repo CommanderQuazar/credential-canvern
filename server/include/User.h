@@ -7,11 +7,7 @@
 
 #include "SqlConnector.h"
 
-typedef struct
-{
-    std::string _passphrase;
-    std::string _password;
-} credentials_t;
+typedef unsigned int target_user_t;
 
 class User
 {
@@ -26,26 +22,15 @@ class User
 
         User&           create();
         User&           login();
-        unsigned int    get_user_id() const { return _u_table_id; };
+        target_user_t   user_id() const { return _u_table_id; };
 
         ~User() = default;
 
-    protected:
-        User(std::string username_entry,
-             std::string passph_entry) :
-            _entry_usern(std::move(username_entry)),
-            _entry_passph(std::move(passph_entry))
-            { };
-        credentials_t& mysql_get_credentials();
-
-        //Stores the table ID of the logged in user
-        unsigned int _u_table_id {0};
-        std::string _entry_usern;
-        std::string _entry_passph;
-
     private:
-        SqlConnector * _server;
-
+        std::string             _entry_usern;      // User entered username
+        std::string             _entry_passph;     // User entered passphrase
+        target_user_t           _u_table_id {0};   // Stores the table ID of the logged in user
+        const SqlConnector *    _server;
 };
 
 
