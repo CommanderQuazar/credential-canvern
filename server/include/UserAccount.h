@@ -8,6 +8,12 @@
 #include "SqlConnector.h"
 #include "User.h"
 
+typedef struct
+{
+    std::string _usern;
+    std::string _passph;
+} credential_t;
+
 class UserAccount
 {
     public:
@@ -17,16 +23,17 @@ class UserAccount
             _user_id(user_table_id)
             { };
 
-        bool    reset_umane(const std::string& new_usern);
-        bool    reset_pass(const std::string& new_passph);
-        void    remove();
+        bool            reset_umane(const std::string& new_usern);
+        bool            reset_pass(const std::string& new_passph);
+        void            remove();
+        credential_t    mysql_get_credentials();
 
     private:
         std::string             _og_passph;
         target_user_t           _user_id;
         const SqlConnector *    _server;
 
-        std::pair<std::string, std::string> mysql_get_credentials();
+
 };
 
 #endif //CREDENTIAL_CAVERN_SERVER_INCLUDE_USERACCOUNT_H_

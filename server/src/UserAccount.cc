@@ -38,7 +38,7 @@ void UserAccount::remove()
  * If _u_table_id is zero, the contents of the pair will be
  * empty. Otherwise the data will be returned
  */
-std::pair<std::string, std::string> UserAccount::mysql_get_credentials()
+credential_t UserAccount::mysql_get_credentials()
 {
 
 }
