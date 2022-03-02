@@ -1,6 +1,9 @@
 //
 // Created by Tobey Ragain on 3/1/22.
 //
+// NOTE: Credential verification calls to the ui logic
+// see mysql_get_credentials()
+//
 
 #ifndef CREDENTIAL_CAVERN_SERVER_INCLUDE_USERACCOUNT_H_
 #define CREDENTIAL_CAVERN_SERVER_INCLUDE_USERACCOUNT_H_
@@ -18,18 +21,22 @@ class UserAccount
 {
     public:
         UserAccount() = delete;
-        UserAccount(target_user_t user_table_id, std::string org_passph) :
-            _og_passph(org_passph),
+        UserAccount(const SqlConnector * my_sql_connection, target_user_t user_table_id,
+                    std::string org_passph) :
+            _server(my_sql_connection),
+            _curr_passph(org_passph),
             _user_id(user_table_id)
             { };
 
-        bool            reset_umane(const std::string& new_usern);
-        bool            reset_pass(const std::string& new_passph);
-        void            remove();
-        credential_t    mysql_get_credentials();
+        bool                    reset_umane(const std::string& new_usern);
+        bool                    reset_pass(const std::string& new_passph);
+        credential_t            mysql_get_credentials();
+        inline UserAccount&     reset_curr_passph(const std::string& new_curr)
+                                { _curr_passph = new_curr; return *this; };
+        void                    remove();
 
     private:
-        std::string             _og_passph;
+        std::string             _curr_passph;
         target_user_t           _user_id;
         const SqlConnector *    _server;
 
