@@ -35,6 +35,8 @@ class UserAccount
                                 { _curr_passph = new_curr; return *this; };
         void                    remove();
 
+        ~UserAccount() = default;
+
     private:
         std::string             _curr_passph;
         target_user_t           _user_id;
