@@ -49,7 +49,7 @@ class SqlConnector
         ~SqlConnector() = default;
 
     private:
-        MYSQL _mysql {};
+        MYSQL _mysql { };
 
         std::string *   _host;
         std::string *   _user;
