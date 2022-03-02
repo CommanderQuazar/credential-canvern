@@ -7,12 +7,38 @@
 /*
  * Creates a new user entry in the User table.
  */
-User& User::create()
+bool User::create()
 {
+    MYSQL_RES * result;
+    std::string query = "SELECT usern FROM User WHERE usern= '" + _entry_usern + "'";
+
+    auto command = [] (std::string q) -> bool 
+        { return mysql_query(_server->connection(), q.c_str()); };
+
+    if(!command(query))
+    {
+        // TODO log error and return
+        return false;
+    }
     // Check if entered username already exists
-
-    // Add a user row with the provided entries
-
+    result = mysql_store_result(_server->connection());
+    if(mysql_num_rows(result) != 0)
+    {
+        // TODO log and return
+        return false;
+    }
+    else
+    {
+        // Add a user row with the provided entries
+        query = "INSERT INTO User (usern, passph) VALUES "
+                "('" + _entry_usern + "'" + _entry_passph + "')";
+        if(!command(query))
+        {
+            // TODO log error and return
+            return false;
+        }
+        return true;
+    }
 }
 
 /*

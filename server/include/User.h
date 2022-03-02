@@ -24,7 +24,7 @@ class User
             _entry_passph(std::move(passph_entry))
             { };
 
-        User&                   create();
+        bool                    create();
         User&                   login();
         inline target_user_t    user_id() const { return _u_table_id; };
         inline User&            reset_entries(const std::string& usern, const std::string& passph)
