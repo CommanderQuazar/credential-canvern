@@ -9,6 +9,9 @@
  */
 User& User::create()
 {
+    // Check if entered username already exists
+
+    // Add a user row with the provided entries
 
 }
 
@@ -20,7 +23,9 @@ User& User::create()
  */
 User& User::login()
 {
+    // Search usernames for entered
 
+    // If username found, check password
 }
 
 
