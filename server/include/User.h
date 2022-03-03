@@ -35,7 +35,7 @@ class User
         inline target_user_t    user_id() const { return _u_table_id; };
         inline User&            reset_entries(const std::string& usern, const std::string& passph)
                                 { _entry_usern = usern; _entry_passph = passph; return *this; }
-        inline User&            logout() { _u_table_id = 0; return *this; };
+        inline User&            logout() { _u_table_id = "0"; return *this; };
 
         ~User() = default;
 

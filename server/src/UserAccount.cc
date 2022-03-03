@@ -10,7 +10,7 @@
  *
  * If _u_table_id is equal to zero, it means the
  */
-bool UserAccount::reset_umane(const std::string& new_usern)
+bool UserAccount::reset_usern(const std::string& new_usern)
 {
     // Check if new username already exists
     std::string query ("SELECT * FROM Users WHERE usern= '" + new_usern + "'");
@@ -28,7 +28,7 @@ bool UserAccount::reset_umane(const std::string& new_usern)
         return false;
     }
 
-    query = "UPDATE Users SET usern= '" + new_usern + "' WHERE id= '" + _user_id + "'";
+    query = "UPDATE Users SET usern= '" + new_usern + "' WHERE user_id= '" + _user_id + "'";
     if(mysql_query(_server->connection(), query.c_str()))
     {
         _server->log("SERVER ERROR: Could not update username to: " + new_usern);
@@ -43,7 +43,7 @@ bool UserAccount::reset_umane(const std::string& new_usern)
  */
 bool UserAccount::reset_pass(const std::string& new_passph)
 {
-    std::string query ("UPDATE Users SET passph= '" + new_passph + "' WHERE id= '" + _user_id + "'");
+    std::string query ("UPDATE Users SET passph= '" + new_passph + "' WHERE user_id= '" + _user_id + "'");
     if(mysql_query(_server->connection(), query.c_str()))
     {
         _server->log("SERVER ERROR: Could not update password");
@@ -59,7 +59,7 @@ bool UserAccount::reset_pass(const std::string& new_passph)
 inline bool UserAccount::remove()
 {
     std::string query ("DELETE FROM Users Favorites Records SessionLog UserConfig "
-                       "WHERE id= '" + _user_id + "'");
+                       "WHERE user_id= '" + _user_id + "'");
     if(mysql_query(_server->connection(), query.c_str()))
     {
         _server->log("SERVER ERROR: Could not touch user account");
@@ -77,7 +77,7 @@ inline bool UserAccount::remove()
  */
 credential_t UserAccount::mysql_get_credentials()
 {
-    std::string query ("SELECT * FROM Users WHERE id= '" + _user_id + "'");
+    std::string query ("SELECT * FROM Users WHERE user_id= '" + _user_id + "'");
     if(mysql_query(_server->connection(), query.c_str()))
     {
         _server->log("SERVER ERROR: Could not find a user account with id: " + _user_id);
