@@ -13,8 +13,9 @@
 
 typedef struct
 {
-    std::string _usern;
-    std::string _passph;
+    std::string     _usern;
+    std::string     _passph;
+    bool            _f_valid;
 } credential_t;
 
 class UserAccount
@@ -38,8 +39,8 @@ class UserAccount
         ~UserAccount() = default;
 
     private:
-        std::string             _curr_passph;
-        target_user_t           _user_id;
+        std::string       _curr_passph;
+        target_user_t     _user_id;
         SqlConnector *    _server;
 
 
