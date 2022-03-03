@@ -21,7 +21,7 @@ class UserAccount
 {
     public:
         UserAccount() = delete;
-        UserAccount(const SqlConnector * my_sql_connection, target_user_t user_table_id,
+        UserAccount(SqlConnector * my_sql_connection, target_user_t user_table_id,
                     std::string org_passph) :
             _server(my_sql_connection),
             _curr_passph(org_passph),
@@ -40,7 +40,7 @@ class UserAccount
     private:
         std::string             _curr_passph;
         target_user_t           _user_id;
-        const SqlConnector *    _server;
+        SqlConnector *    _server;
 
 
 };
