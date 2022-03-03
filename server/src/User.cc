@@ -12,10 +12,7 @@ creation_status_e User::create()
     MYSQL_RES * result;
     std::string query = "SELECT usern FROM User WHERE usern= '" + _entry_usern + "'";
 
-    auto command = [] (std::string q) -> bool 
-        { return mysql_query(_server->connection(), q.c_str()); };
-
-    if(!command(query))
+    if(!_command(query))
     {
         _server->log("ERROR: Selecting from User table failed");
         return SERVER_FAULT;
@@ -33,7 +30,7 @@ creation_status_e User::create()
         // Add a user row with the provided entries
         query = "INSERT INTO User (usern, passph) VALUES "
                 "('" + _entry_usern + "'" + _entry_passph + "')";
-        if(!command(query))
+        if(!_command(query))
         {
             _server->log("ERROR: Inserting a new user into the User table has failed");
             return SERVER_FAULT;
@@ -51,6 +48,7 @@ creation_status_e User::create()
 User& User::login()
 {
     // Search usernames for entered
+    std::string query = "SELECT * FROM Users WHERE usern= '" + _entry_usern + "'";
 
     // If username found, check password
 }
