@@ -55,7 +55,7 @@ std::string SqlConnector::get_curr_time_date(const std::string& s)
  */
 SqlConnector& SqlConnector::log(const std::string& msg)
 {
-    std::string filePath = _logfile_location;
+    std::string filePath (_logfile_location);
     std::string now = get_curr_time_date("now");
     std::ofstream ofs(filePath.c_str(), std::ios_base::out | std::ios_base::app );
     ofs << now << '\t' << msg << '\n';

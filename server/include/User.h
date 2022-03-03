@@ -11,6 +11,10 @@
 
 #include "SqlConnector.h"
 
+#define ID      0
+#define USERN   1
+#define PASSPH  2
+
 typedef std::string target_user_t;
 
 enum creation_status_e {SUCCESS, SERVER_FAULT, BAD_USERN};

@@ -9,8 +9,7 @@
  */
 creation_status_e User::create()
 {
-    MYSQL_RES * mysqlResult {};
-    std::string query = "SELECT usern FROM Users WHERE usern= '" + _entry_usern + "'";
+    std::string query ("SELECT usern FROM Users WHERE usern= '" + _entry_usern + "'");
 
     if(mysql_query(_server->connection(), query.c_str()))
     {
@@ -18,7 +17,7 @@ creation_status_e User::create()
         return SERVER_FAULT;
     }
     // Check if entered username already exists
-    mysqlResult = mysql_store_result(_server->connection());
+    MYSQL_RES * mysqlResult = mysql_store_result(_server->connection());
     if(mysql_num_rows(mysqlResult) != 0)
     {
         _server->log("FAILED: Unsuccessful creation of user: "
@@ -49,10 +48,8 @@ creation_status_e User::create()
  */
 User& User::login()
 {
-    MYSQL_RES * mysqlResult {};
-
-    std::string query = "SELECT * FROM Users WHERE usern= '" + _entry_usern +
-        "' AND passph= '" + _entry_passph + "'";
+    std::string query ("SELECT * FROM Users WHERE usern= '" + _entry_usern +
+        "' AND passph= '" + _entry_passph + "'");
 
     // Check if usern and passph exists
     // User creation verifies that no repeat usern are added
@@ -62,7 +59,7 @@ User& User::login()
         return *this;
     }
 
-    mysqlResult = mysql_store_result(_server->connection());
+    MYSQL_RES * mysqlResult = mysql_store_result(_server->connection());
     if(mysql_num_rows(mysqlResult) == 0)
     {
         _server->log("FAILED: No user found with provided username or password");
@@ -71,7 +68,7 @@ User& User::login()
 
     // Get the id of the user account
     MYSQL_ROW row = mysql_fetch_row(mysqlResult);
-    _u_table_id = row[0];
+    _u_table_id = row[ID];
     _server->log("Logged in to account: " + _entry_usern);
     return *this;
 }

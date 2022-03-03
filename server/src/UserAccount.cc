@@ -12,7 +12,8 @@
  */
 bool UserAccount::reset_umane(const std::string& new_passph)
 {
-
+    std::string query (" ");
+    mysql_query(_server->connection(), query.c_str())
 }
 
 /*
@@ -41,7 +42,7 @@ void UserAccount::remove()
  */
 credential_t UserAccount::mysql_get_credentials()
 {
-    std::string query = "SELECT * FROM Users WHERE id= '" + _user_id + "'";
+    std::string query ("SELECT * FROM Users WHERE id= '" + _user_id + "'");
     if(mysql_query(_server->connection(), query.c_str()))
     {
         _server->log("ERROR: Could not find a user account with id: " + _user_id);
@@ -51,5 +52,7 @@ credential_t UserAccount::mysql_get_credentials()
     MYSQL_RES * mysqlResult = mysql_store_result(_server->connection());
     MYSQL_ROW userAccount = mysql_fetch_row(mysqlResult);
 
-    return {userAccount[1], userAccount[2], true};
+    std::string usern (userAccount[USERN]);
+    _server->log("Credentials for user '" + usern + "' sent");
+    return {usern, userAccount[PASSPH], true};
 }
