@@ -18,6 +18,7 @@ SqlConnector& SqlConnector::connect()
                        _port,
                        _unix_socket == nullptr ? nullptr : _unix_socket->c_str(),
                        _client_flag);
+    log(("Connected to MySQL server: " + *_db));
     return *this;
 }
 
@@ -28,6 +29,7 @@ SqlConnector& SqlConnector::connect()
 SqlConnector &SqlConnector::disconnect()
 {
     mysql_close(&_mysql);
+    log("Disconnected from MySQL server: " + *_db);
     return *this;
 }
 

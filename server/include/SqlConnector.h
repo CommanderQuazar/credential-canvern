@@ -43,9 +43,9 @@ class SqlConnector
         SqlConnector(SqlConnector& copy) = delete;
 
         SqlConnector&       connect();
-        inline std::string  stats()             { return mysql_stat(&_mysql); };
-        inline bool         status()            { return mysql_ping(&_mysql); };
-        inline MYSQL *      connection() const  { return &_mysql; };
+        inline std::string  stats()         { return mysql_stat(&_mysql); };
+        inline bool         status()        { return mysql_ping(&_mysql); };
+        inline MYSQL *      connection()    { return &_mysql; };
         SqlConnector&       log(const std::string& msg);
         SqlConnector&       disconnect();
 
@@ -54,7 +54,7 @@ class SqlConnector
     private:
         MYSQL _mysql { };
 
-        std::string _logfile_location;
+        std::string     _logfile_location;
         std::string *   _host;
         std::string *   _user;
         std::string *   _passwd;
