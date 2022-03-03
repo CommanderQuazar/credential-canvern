@@ -9,7 +9,7 @@
  */
 creation_status_e User::create()
 {
-    MYSQL_RES * result;
+    MYSQL_RES * mysqlResult;
     std::string query = "SELECT usern FROM User WHERE usern= '" + _entry_usern + "'";
 
     if(!_command(query))
@@ -18,8 +18,8 @@ creation_status_e User::create()
         return SERVER_FAULT;
     }
     // Check if entered username already exists
-    result = mysql_store_result(_server->connection());
-    if(mysql_num_rows(result) != 0)
+    mysqlResult = mysql_store_result(_server->connection());
+    if(mysql_num_rows(mysqlResult) != 0)
     {
         _server->log("FAILED: Unsuccessful creation of user: "
                      "username already exists in this database");
@@ -47,10 +47,28 @@ creation_status_e User::create()
  */
 User& User::login()
 {
-    // Search usernames for entered
-    std::string query = "SELECT * FROM Users WHERE usern= '" + _entry_usern + "'";
+    MYSQL_RES * mysqlResult;
+    std::string query = "SELECT * FROM Users WHERE passph= '" + _entry_passph +
+        "' AND usern= '" + _entry_passph + "'";
 
-    // If username found, check password
+    // Check if usern and passph exists
+    // User creation verifies that no repeat usern are added
+    if(!_command(query))
+    {
+        _server->log("ERROR: Selecting passph User table failed");
+        return *this;
+    }
+    mysqlResult = mysql_store_result(_server->connection());
+    if(mysql_num_rows(mysqlResult) == 0)
+    {
+        _server->log("FAILED: No user found with provided username or password");
+        return *this;
+    }
+
+    // Get the id of the user account
+    MYSQL_ROW row = mysql_fetch_row(mysqlResult);
+    _u_table_id = atoi(row[0]);
+    return *this;
 }
 
 

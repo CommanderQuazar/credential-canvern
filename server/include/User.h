@@ -33,17 +33,15 @@ class User
                                 { _entry_usern = usern; _entry_passph = passph; return *this; }
         inline User&            logout() { _u_table_id = 0; return *this; };
 
-
-
         ~User() = default;
 
     private:
-        target_user_t           _u_table_id { 0 }; // Stores the table ID of the logged in user
-        std::string             _entry_usern;      // User entered username
-        std::string             _entry_passph;     // User entered passphrase
-        auto _command = [] (std::string q) -> bool
-        { return mysql_query(_server->connection(), q.c_str()); };
-        SqlConnector *    _server;
+        target_user_t   _u_table_id { 0 }; // Stores the table ID of the logged in user
+        std::string     _entry_usern;      // User entered username
+        std::string     _entry_passph;     // User entered passphrase
+        auto            _command = [] (std::string q) -> bool
+                        { return mysql_query(_server->connection(), q.c_str()); };
+        SqlConnector *  _server;
 };
 
 
