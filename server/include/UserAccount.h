@@ -22,24 +22,19 @@ class UserAccount
 {
     public:
         UserAccount() = delete;
-        UserAccount(SqlConnector * my_sql_connection, target_user_t user_table_id,
-                    std::string org_passph) :
+        UserAccount(SqlConnector * my_sql_connection, target_user_t user_table_id) :
             _server(my_sql_connection),
-            _curr_passph(org_passph),
             _user_id(user_table_id)
             { };
 
         inline bool             reset_umane(const std::string& new_usern);
         inline bool             reset_pass(const std::string& new_passph);
         credential_t            mysql_get_credentials();
-        inline UserAccount&     reset_curr_passph(const std::string& new_curr)
-                                { _curr_passph = new_curr; return *this; };
         void                    remove();
 
         ~UserAccount() = default;
 
     private:
-        std::string       _curr_passph;
         target_user_t     _user_id;
         SqlConnector *    _server;
 
