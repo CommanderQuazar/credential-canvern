@@ -31,3 +31,33 @@ SqlConnector &SqlConnector::disconnect()
     return *this;
 }
 
+std::string SqlConnector::get_curr_time_date(const std::string& s)
+{
+    time_t now = time(nullptr);
+    struct tm  timeStruct { };
+    char  buf[80];
+    timeStruct = * localtime(&now);
+    if(s == "now")
+    {
+        strftime(buf, sizeof(buf), "%Y-%m-%d %X", &timeStruct);
+    }
+    else if(s == "date")
+    {
+        strftime(buf, sizeof(buf), "%Y-%m-%d", &timeStruct);
+    }
+    return {buf};
+}
+
+/*
+ * Logs MySQL actions to a provided log file throughout the library
+ */
+SqlConnector &SqlConnector::log(const std::string& msg)
+{
+    std::string filePath = _logfile_location;
+    std::string now = get_curr_time_date("now");
+    std::ofstream ofs(filePath.c_str(), std::ios_base::out | std::ios_base::app );
+    ofs << now << '\t' << msg << '\n';
+    ofs.close();
+    return *this;
+}
+
