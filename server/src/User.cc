@@ -13,7 +13,7 @@ creation_status_e User::create()
 
     if(mysql_query(_server->connection(), query.c_str()))
     {
-        _server->log("ERROR: Selecting from User table failed");
+        _server->log("SERVER ERROR: Selecting from User table failed");
         return SERVER_FAULT;
     }
     // Check if entered username already exists
@@ -32,7 +32,7 @@ creation_status_e User::create()
                 "('" + _entry_usern + "', '" + _entry_passph + "')";
         if(mysql_query(_server->connection(), query.c_str()))
         {
-            _server->log("ERROR: Inserting a new user into the User table has failed");
+            _server->log("SERVER ERROR: Adding a new user has failed");
             return SERVER_FAULT;
         }
         _server->log("Created new user: " + _entry_usern);
@@ -55,7 +55,7 @@ User& User::login()
     // User creation verifies that no repeat usern are added
     if(mysql_query(_server->connection(), query.c_str()))
     {
-        _server->log("ERROR: Selecting passph User table failed");
+        _server->log("SERVER ERROR: Selecting passph User table failed");
         return *this;
     }
 
