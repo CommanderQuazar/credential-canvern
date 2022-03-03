@@ -23,14 +23,15 @@ class SqlConnector
 {
     public:
         SqlConnector() = delete;
-        SqlConnector(std::string logfile,
-                     std::string *  host_name,
-                     std::string *  user_name,
-                     std::string *  password,
-                     std::string *  database,
-                     unsigned int   port_number,
-                     std::string *  unix_socket_number = nullptr,
-                     unsigned long  client_f = 0) :
+        SqlConnector(const std::string& logfile,
+                     std::string *      host_name,
+                     std::string *      user_name,
+                     std::string *      password,
+                     std::string *      database,
+                     unsigned int       port_number,
+                     std::string *      unix_socket_number = nullptr,
+                     unsigned long      client_f = 0) :
+            _logfile_location(logfile),
             _host           (host_name),
             _user           (user_name),
             _passwd         (password),
