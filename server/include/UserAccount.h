@@ -27,10 +27,10 @@ class UserAccount
             _user_id(user_table_id)
             { };
 
-        inline bool             reset_umane(const std::string& new_usern);
-        inline bool             reset_pass(const std::string& new_passph);
-        credential_t            mysql_get_credentials();
-        void                    remove();
+        inline bool     reset_umane(const std::string& new_usern);
+        inline bool     reset_pass(const std::string& new_passph);
+        credential_t    mysql_get_credentials();
+        bool            remove();
 
         ~UserAccount() = default;
 

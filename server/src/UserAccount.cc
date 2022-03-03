@@ -40,9 +40,17 @@ bool UserAccount::reset_pass(const std::string& new_passph)
  * Torches all data in user's account and removes it from
  * the user table.
  */
-void UserAccount::remove()
+bool UserAccount::remove()
 {
-
+    std::string query ("DELETE FROM Users Favorites Records SessionLog UserConfig "
+                       "WHERE id= '" + _user_id + "'");
+    if(mysql_query(_server->connection(), query.c_str()))
+    {
+        _server->log("SERVER ERROR: Could not touch user account");
+        return false;
+    }
+    _server->log("Torched user '" + _user_id + "' account");
+    return true;
 }
 
 /*
