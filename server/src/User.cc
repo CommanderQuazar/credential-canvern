@@ -36,6 +36,7 @@ creation_status_e User::create()
             _server->log("ERROR: Inserting a new user into the User table has failed");
             return SERVER_FAULT;
         }
+        _server->log("Created new user: " + _entry_usern);
         return SUCCESS;
     }
 }
@@ -71,6 +72,7 @@ User& User::login()
     // Get the id of the user account
     MYSQL_ROW row = mysql_fetch_row(mysqlResult);
     _u_table_id = atoi(row[0]);
+    _server->log("Logged in to account: " + _entry_usern);
     return *this;
 }
 
