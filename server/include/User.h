@@ -39,10 +39,6 @@ class User
         target_user_t   _u_table_id { 0 }; // Stores the table ID of the logged in user
         std::string     _entry_usern;      // User entered username
         std::string     _entry_passph;     // User entered passphrase
-        auto            _command = [] (std::string q) -> bool
-                        { return mysql_query(_server->connection(), q.c_str()); };
         SqlConnector *  _server;
 };
-
-
 #endif //CREDENTIAL_CAVERN_SERVER_INCLUDE_USER_H_

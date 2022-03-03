@@ -9,10 +9,10 @@
  */
 creation_status_e User::create()
 {
-    MYSQL_RES * mysqlResult;
-    std::string query = "SELECT usern FROM User WHERE usern= '" + _entry_usern + "'";
+    MYSQL_RES * mysqlResult {};
+    std::string query = "SELECT usern FROM Users WHERE usern= '" + _entry_usern + "'";
 
-    if(!_command(query))
+    if(mysql_query(_server->connection(), query.c_str()))
     {
         _server->log("ERROR: Selecting from User table failed");
         return SERVER_FAULT;
@@ -27,10 +27,11 @@ creation_status_e User::create()
     }
     else
     {
+
         // Add a user row with the provided entries
-        query = "INSERT INTO User (usern, passph) VALUES "
-                "('" + _entry_usern + "'" + _entry_passph + "')";
-        if(!_command(query))
+        query = "INSERT INTO Users (usern, passph) VALUES "
+                "('" + _entry_usern + "', '" + _entry_passph + "')";
+        if(mysql_query(_server->connection(), query.c_str()))
         {
             _server->log("ERROR: Inserting a new user into the User table has failed");
             return SERVER_FAULT;
@@ -47,17 +48,19 @@ creation_status_e User::create()
  */
 User& User::login()
 {
-    MYSQL_RES * mysqlResult;
-    std::string query = "SELECT * FROM Users WHERE passph= '" + _entry_passph +
-        "' AND usern= '" + _entry_passph + "'";
+    MYSQL_RES * mysqlResult {};
+
+    std::string query = "SELECT * FROM Users WHERE usern= '" + _entry_usern +
+        "' AND passph= '" + _entry_passph + "'";
 
     // Check if usern and passph exists
     // User creation verifies that no repeat usern are added
-    if(!_command(query))
+    if(mysql_query(_server->connection(), query.c_str()))
     {
         _server->log("ERROR: Selecting passph User table failed");
         return *this;
     }
+
     mysqlResult = mysql_store_result(_server->connection());
     if(mysql_num_rows(mysqlResult) == 0)
     {
