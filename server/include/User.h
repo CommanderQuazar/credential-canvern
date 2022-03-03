@@ -11,7 +11,7 @@
 
 #include "SqlConnector.h"
 
-typedef unsigned int target_user_t;
+typedef std::string target_user_t;
 
 enum creation_status_e {SUCCESS, SERVER_FAULT, BAD_USERN};
 

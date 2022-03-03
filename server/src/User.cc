@@ -71,7 +71,7 @@ User& User::login()
 
     // Get the id of the user account
     MYSQL_ROW row = mysql_fetch_row(mysqlResult);
-    _u_table_id = atoi(row[0]);
+    _u_table_id = row[0];
     _server->log("Logged in to account: " + _entry_usern);
     return *this;
 }
