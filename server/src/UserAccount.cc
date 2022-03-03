@@ -34,6 +34,7 @@ bool UserAccount::reset_usern(const std::string& new_usern)
         _server->log("SERVER ERROR: Could not update username to: " + new_usern);
         return false;
     }
+    _server->log("User '" + _user_id + "' username has been updated to: " + new_usern);
     return true;
 }
 
@@ -49,6 +50,7 @@ bool UserAccount::reset_pass(const std::string& new_passph)
         _server->log("SERVER ERROR: Could not update password");
         return false;
     }
+    _server->log("User '" + _user_id + "' password has been updated");
     return true;
 }
 
