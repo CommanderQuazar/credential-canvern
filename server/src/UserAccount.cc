@@ -12,7 +12,23 @@
  */
 bool UserAccount::reset_umane(const std::string& new_usern)
 {
-    std::string query ("UPDATE Users SET usern= '" + new_usern + "' WHERE id= '" + _user_id + "'");
+    // Check if new username already exists
+    std::string query ("SELECT * FROM Users WHERE usern= '" + new_usern + "'");
+    if(mysql_query(_server->connection(), query.c_str()))
+    {
+        _server->log("SERVER ERROR: Could not check the new username");
+        return false;
+    }
+
+    MYSQL_RES * mysqlResult = mysql_store_result(_server->connection());
+    if(mysql_num_rows(mysqlResult) != 0)
+    {
+        _server->log("FAILED: Unsuccessful change of username: "
+                     "username already exists in this database");
+        return false;
+    }
+
+    query = "UPDATE Users SET usern= '" + new_usern + "' WHERE id= '" + _user_id + "'";
     if(mysql_query(_server->connection(), query.c_str()))
     {
         _server->log("SERVER ERROR: Could not update username to: " + new_usern);
@@ -40,7 +56,7 @@ bool UserAccount::reset_pass(const std::string& new_passph)
  * Torches all data in user's account and removes it from
  * the user table.
  */
-bool UserAccount::remove()
+inline bool UserAccount::remove()
 {
     std::string query ("DELETE FROM Users Favorites Records SessionLog UserConfig "
                        "WHERE id= '" + _user_id + "'");
