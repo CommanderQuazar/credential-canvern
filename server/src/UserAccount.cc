@@ -12,12 +12,13 @@
  */
 bool UserAccount::reset_umane(const std::string& new_usern)
 {
-    std::string query (" ");
+    std::string query ("UPDATE Users SET usern= '" + new_usern + "' WHERE id= '" + _user_id + "'");
     if(mysql_query(_server->connection(), query.c_str()))
     {
         _server->log("SERVER ERROR: Could not update username to: " + new_usern);
         return false;
     }
+    return true;
 }
 
 /*
@@ -26,7 +27,13 @@ bool UserAccount::reset_umane(const std::string& new_usern)
  */
 bool UserAccount::reset_pass(const std::string& new_passph)
 {
-
+    std::string query ("UPDATE Users SET passph= '" + new_passph + "' WHERE id= '" + _user_id + "'");
+    if(mysql_query(_server->connection(), query.c_str()))
+    {
+        _server->log("SERVER ERROR: Could not update password");
+        return false;
+    }
+    return true;
 }
 
 /*
