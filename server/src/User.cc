@@ -7,7 +7,7 @@
 /*
  * Creates a new user entry in the User table.
  */
-bool User::create()
+creation_status_e User::create()
 {
     MYSQL_RES * result;
     std::string query = "SELECT usern FROM User WHERE usern= '" + _entry_usern + "'";
@@ -17,15 +17,16 @@ bool User::create()
 
     if(!command(query))
     {
-        // TODO log error and return
-        return false;
+        _server->log("ERROR: Selecting from User table failed");
+        return SERVER_FAULT;
     }
     // Check if entered username already exists
     result = mysql_store_result(_server->connection());
     if(mysql_num_rows(result) != 0)
     {
-        // TODO log and return
-        return false;
+        _server->log("FAILED: Unsuccessful creation of user: "
+                     "username already exists in this database");
+        return BAD_USERN;
     }
     else
     {
@@ -34,10 +35,10 @@ bool User::create()
                 "('" + _entry_usern + "'" + _entry_passph + "')";
         if(!command(query))
         {
-            // TODO log error and return
-            return false;
+            _server->log("ERROR: Inserting a new user into the User table has failed");
+            return SERVER_FAULT;
         }
-        return true;
+        return SUCCESS;
     }
 }
 

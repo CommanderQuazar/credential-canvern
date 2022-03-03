@@ -13,18 +13,20 @@
 
 typedef unsigned int target_user_t;
 
+enum creation_status_e {SUCCESS, SERVER_FAULT, BAD_USERN};
+
 class User
 {
     public:
         User() = delete;
-        User(const SqlConnector * my_sql_connection, std::string username_entry,
+        User(SqlConnector * my_sql_connection, std::string username_entry,
              std::string passph_entry) :
             _server(my_sql_connection),
             _entry_usern(std::move(username_entry)),
             _entry_passph(std::move(passph_entry))
             { };
 
-        bool                    create();
+        creation_status_e       create();
         User&                   login();
         inline target_user_t    user_id() const { return _u_table_id; };
         inline User&            reset_entries(const std::string& usern, const std::string& passph)
@@ -37,7 +39,7 @@ class User
         target_user_t           _u_table_id { 0 }; // Stores the table ID of the logged in user
         std::string             _entry_usern;      // User entered username
         std::string             _entry_passph;     // User entered passphrase
-        const SqlConnector *    _server;
+        SqlConnector *    _server;
 };
 
 

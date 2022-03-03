@@ -51,7 +51,7 @@ std::string SqlConnector::get_curr_time_date(const std::string& s)
 /*
  * Logs MySQL actions to a provided log file throughout the library
  */
-SqlConnector &SqlConnector::log(const std::string& msg)
+SqlConnector& SqlConnector::log(const std::string& msg)
 {
     std::string filePath = _logfile_location;
     std::string now = get_curr_time_date("now");
