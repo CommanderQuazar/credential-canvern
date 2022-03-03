@@ -17,12 +17,14 @@
 #include <mysql/mysql.h>
 
 #include <iostream>
+#include <fstream>
 
 class SqlConnector
 {
     public:
         SqlConnector() = delete;
-        SqlConnector(std::string *  host_name,
+        SqlConnector(std::string logfile,
+                     std::string *  host_name,
                      std::string *  user_name,
                      std::string *  password,
                      std::string *  database,
@@ -41,9 +43,10 @@ class SqlConnector
         SqlConnector(SqlConnector& copy) = delete;
 
         SqlConnector&       connect();
-        inline std::string  stats()          { return mysql_stat(&_mysql); };
-        inline bool         status()         { return mysql_ping(&_mysql); };
-        inline MYSQL *      connection()     { return &_mysql; };
+        inline std::string  stats()             { return mysql_stat(&_mysql); };
+        inline bool         status()            { return mysql_ping(&_mysql); };
+        inline MYSQL *      connection() const  { return &_mysql; };
+        SqlConnector&       log(const std::string& msg);
         SqlConnector&       disconnect();
 
         ~SqlConnector() = default;
@@ -51,6 +54,7 @@ class SqlConnector
     private:
         MYSQL _mysql { };
 
+        std::string _logfile_location;
         std::string *   _host;
         std::string *   _user;
         std::string *   _passwd;
@@ -58,6 +62,8 @@ class SqlConnector
         unsigned int    _port;
         std::string *   _unix_socket;
         unsigned long   _client_flag;
+
+        std::string get_curr_time_date(const std::string& s);
 };
 
 
