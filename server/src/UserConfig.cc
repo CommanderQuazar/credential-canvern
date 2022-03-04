@@ -23,7 +23,7 @@ unsigned int UserConfig::init_configs()
     }
 
     MYSQL_RES * mysqlResult = mysql_store_result(_server->connection());
-    if(mysql_num_rows(mysqlResult) > 1)
+    if(mysql_num_rows(mysqlResult) >= 1)
     {
         _server->log("FAILED: User '" + _user_id + "' already exists");
         return EXIT_FAILURE;
