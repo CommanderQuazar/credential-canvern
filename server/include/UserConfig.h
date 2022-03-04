@@ -26,8 +26,8 @@
 // These types and the defines above are solely for
 // the purposes of readability and data accuracy
 
-std::string logouts[6] = {"120", "300", "600", "2600", "86400", "never"};
-std::string themes[4] = {"blue", "green", "red", "purple"};
+static std::string logouts[6] = {"120", "300", "600", "2600", "86400", "never"};
+static std::string themes[4] = {"blue", "green", "red", "purple"};
 
 typedef struct
 {
@@ -51,6 +51,7 @@ class UserConfig
         unsigned int            push_logout_period(std::string period);
         unsigned int            push_theme(std::string theme_color);
         unsigned int            toggle_encryption();
+
 
     private:
         target_user_t       _user_id;
