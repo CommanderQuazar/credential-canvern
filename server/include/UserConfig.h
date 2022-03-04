@@ -11,14 +11,30 @@
 #include "SqlConnector.h"
 #include "User.h"
 
-enum logout_period_e {TWO_MIN, FIVE_MIN, TEN_MIN, FORTY_FIVE_MIN, ONE_DAY, NEVER};
-enum theme_color_e {BLUE, GREEN, RED, PURPLE};
+#define BLUE            0
+#define GREEN           1
+#define RED             2
+#define PURPLE          3
+
+#define TWO_MIN         0
+#define FIVE_MIN        1
+#define TEN_MIN         2
+#define FORTY_FIVE_MIN  3
+#define ONE_DAY         4
+#define NEVER           5
+
+// These types and the defines above are solely for
+// the purposes of readability and data accuracy
+
+typedef std::string logout_t[6];
+typedef std::string theme_t[4];
 
 typedef struct
 {
     bool            _encryption_enabled;
-    logout_period_e _logout_time;
-    theme_color_e   _account_theme;
+    std::string     _logout_time;
+    std::string     _account_theme;
+    bool            _f_valid;
 } configurations_t;
 
 class UserConfig
@@ -32,8 +48,8 @@ class UserConfig
 
         inline configurations_t pull_configs();
         UserConfig& init_configs();
-        UserConfig& push_logout_period(logout_period_e period);
-        UserConfig& push_theme(theme_color_e theme_color);
+        UserConfig& push_logout_period(std::string period);
+        UserConfig& push_theme(std::string theme_color);
         UserConfig& toggle_encryption();
 
     private:
