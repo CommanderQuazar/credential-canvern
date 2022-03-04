@@ -31,6 +31,7 @@ class UserConfig
            { };
 
         inline configurations_t pull_configs();
+        UserConfig& init_configs();
         UserConfig& push_logout_period(logout_period_e period);
         UserConfig& push_theme(theme_color_e theme_color);
         UserConfig& toggle_encryption();
