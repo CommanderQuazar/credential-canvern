@@ -64,7 +64,15 @@ configurations_t UserConfig::pull_configs()
  */
 unsigned int UserConfig::push_logout_period(std::string period)
 {
+    std::string query ("UPDATE UserConfig SET logout_period = "
+                       "'" + period + "' WHERE user_fk= '" + _user_id + "'");
 
+    if(mysql_query(_server->connection(), query.c_str()))
+    {
+        _server->log("Failed to push a new logout period");
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
 }
 
 /*
@@ -72,7 +80,15 @@ unsigned int UserConfig::push_logout_period(std::string period)
  */
 unsigned int UserConfig::push_theme(std::string theme_color)
 {
+    std::string query ("UPDATE UserConfig SET theme_color = "
+                       "'" + theme_color + "' WHERE user_fk= '" + _user_id + "'");
 
+    if(mysql_query(_server->connection(), query.c_str()))
+    {
+        _server->log("Failed to push a new theme");
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
 }
 
 /*
