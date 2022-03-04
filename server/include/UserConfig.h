@@ -25,16 +25,18 @@ class UserConfig
 {
     public:
         UserConfig() = delete;
-        UserConfig(SqlConnector * connection, target_user_t user_table_id,
-                   logout_period_e logout, theme_color_e color, bool encrypt) :
+        UserConfig(SqlConnector * connection, target_user_t user_table_id) :
            _user_id(user_table_id),
-           _server(connection),
-           _user_configs({encrypt, logout, color})
-            { };
+           _server(connection)
+           { };
+
+        inline configurations_t pull_configs();
+        UserConfig& push_logout_period(logout_period_e period);
+        UserConfig& push_theme(theme_color_e theme_color);
+        UserConfig& toggle_encryption();
 
     private:
         target_user_t       _user_id;
-        configurations_t    _user_configs;
         SqlConnector *      _server;
 
 };
