@@ -16,7 +16,7 @@ unsigned int UserAccount::reset_usern(const std::string& new_usern)
     std::string query ("SELECT * FROM Users WHERE usern= '" + new_usern + "'");
     if(mysql_query(_server->connection(), query.c_str()))
     {
-        _server->log("SERVER ERROR: Could not process id search");
+        _server->log("SERVER ERROR: Could not pull an id search");
         return EXIT_FAILURE;
     }
 
@@ -31,7 +31,7 @@ unsigned int UserAccount::reset_usern(const std::string& new_usern)
     query = "UPDATE Users SET usern= '" + new_usern + "' WHERE user_id= '" + _user_id + "'";
     if(mysql_query(_server->connection(), query.c_str()))
     {
-        _server->log("SERVER ERROR: Could not update username to: " + new_usern);
+        _server->log("SERVER ERROR: Could not push the username to: " + new_usern);
         return false;
     }
     _server->log("User '" + _user_id + "' username has been updated to: " + new_usern);
@@ -47,7 +47,7 @@ unsigned int UserAccount::reset_pass(const std::string& new_passph)
     std::string query ("UPDATE Users SET passph= '" + new_passph + "' WHERE user_id= '" + _user_id + "'");
     if(mysql_query(_server->connection(), query.c_str()))
     {
-        _server->log("SERVER ERROR: Could not update password");
+        _server->log("SERVER ERROR: Could not push the new password");
         return EXIT_FAILURE;
     }
     _server->log("User '" + _user_id + "' password has been updated");
@@ -64,7 +64,7 @@ inline unsigned int UserAccount::remove()
                        "WHERE user_id= '" + _user_id + "'");
     if(mysql_query(_server->connection(), query.c_str()))
     {
-        _server->log("SERVER ERROR: Could not touch user account");
+        _server->log("SERVER ERROR: Could send a touch request");
         return EXIT_FAILURE;
     }
     _server->log("Torched user '" + _user_id + "' account");
@@ -79,16 +79,22 @@ inline unsigned int UserAccount::remove()
  */
 credential_t UserAccount::pull_credentials()
 {
+    // Check if user id exists
     std::string query ("SELECT * FROM Users WHERE user_id= '" + _user_id + "'");
     if(mysql_query(_server->connection(), query.c_str()))
     {
-        _server->log("SERVER ERROR: Could not find a user account with id: " + _user_id);
-        //TODO
+        _server->log("SERVER ERROR: Could not pull a user account with id: " + _user_id);
         return {"", "", false};
     }
 
     MYSQL_RES * mysqlResult = mysql_store_result(_server->connection());
     MYSQL_ROW userAccount = mysql_fetch_row(mysqlResult);
+
+    if(mysql_num_rows(mysqlResult) == 0)
+    {
+        _server->log("SERVER ERROR: Could not find a user account with id: " + _user_id);
+        return {"", "", false};
+    }
 
     std::string usern (userAccount[USERN]);
     _server->log("Credentials for user '" + usern + "' sent");
