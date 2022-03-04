@@ -5,6 +5,33 @@
 #include "../include/UserConfig.h"
 
 /*
+ * Creates a default user config row in the table.
+ * Defaults:
+ * * Encryption is active
+ * * Logout period is every 10 min
+ * * Theme color is blue
+ */
+unsigned int UserConfig::init_configs()
+{
+    // Check if user already has a config row
+    std::string query ("SELECT user_fk FROM UserConfig WHERE user_fk= '" + _user_id + "'");
+
+    if(mysql_query(_server->connection(), query.c_str()))
+    {
+        _server->log("SERVER ERROR: Could not process id search");
+    }
+
+    MYSQL_RES * mysqlResult = mysql_store_result(_server->connection());
+    if(mysql_num_rows(mysqlResult) > 1)
+    {
+        _server->log("FAILED: User '" + _user_id + "' already exists");
+        return EXIT_FAILURE;
+    }
+    query = "INSERT INTO UserConfig (enable_encryption, logout_period, "
+                       "theme_color, user_fk) VALUES ( )";
+}
+
+/*
  * Gets all of the user configurations from the database
  */
 configurations_t UserConfig::pull_configs()
@@ -25,7 +52,7 @@ configurations_t UserConfig::pull_configs()
 /*
  * Pushes a new logout period to the database
  */
-UserConfig &UserConfig::push_logout_period(std::string period)
+unsigned int UserConfig::push_logout_period(std::string period)
 {
 
 }
@@ -33,7 +60,7 @@ UserConfig &UserConfig::push_logout_period(std::string period)
 /*
  * Pushes a new GUI theme to the database
  */
-UserConfig &UserConfig::push_theme(std::string theme_color)
+unsigned int UserConfig::push_theme(std::string theme_color)
 {
 
 }
@@ -41,19 +68,8 @@ UserConfig &UserConfig::push_theme(std::string theme_color)
 /*
  * Changes whether the user would like to encrypt server-side data
  */
-UserConfig &UserConfig::toggle_encryption()
+unsigned int UserConfig::toggle_encryption()
 {
 
 }
 
-/*
- * Creates a default user config row in the table.
- * Defaults:
- * * Encryption is active
- * * Logout period is every 10 min
- * * Theme color is blue
- */
-UserConfig &UserConfig::init_configs()
-{
-    // Check if user already has a config row
-}

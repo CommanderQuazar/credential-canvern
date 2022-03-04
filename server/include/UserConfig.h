@@ -47,10 +47,10 @@ class UserConfig
            { };
 
         inline configurations_t pull_configs();
-        UserConfig& init_configs();
-        UserConfig& push_logout_period(std::string period);
-        UserConfig& push_theme(std::string theme_color);
-        UserConfig& toggle_encryption();
+        unsigned int            init_configs();
+        unsigned int            push_logout_period(std::string period);
+        unsigned int            push_theme(std::string theme_color);
+        unsigned int            toggle_encryption();
 
     private:
         target_user_t       _user_id;

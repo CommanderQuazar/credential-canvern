@@ -27,10 +27,10 @@ class UserAccount
             _user_id(user_table_id)
             { };
 
-        bool            reset_usern(const std::string& new_usern);
-        bool            reset_pass(const std::string& new_passph);
-        credential_t    pull_credentials();
-        inline bool     remove();
+        unsigned int            reset_usern(const std::string& new_usern);
+        unsigned int            reset_pass(const std::string& new_passph);
+        credential_t            pull_credentials();
+        inline unsigned int     remove();
 
         ~UserAccount() = default;
 
