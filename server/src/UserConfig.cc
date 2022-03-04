@@ -35,7 +35,7 @@ unsigned int UserConfig::init_configs()
 
     if(mysql_query(_server->connection(), query.c_str()))
     {
-        _server->log("SERVER ERROR: Could not initiate a config row for user: " + _user_id);
+        _server->log("SERVER ERROR: Could not push a config row for user: " + _user_id);
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
@@ -80,6 +80,14 @@ unsigned int UserConfig::push_theme(std::string theme_color)
  */
 unsigned int UserConfig::toggle_encryption()
 {
+    std::string query ("UPDATE UserConfig SET enable_encryption = "
+                       "NOT boolean_field WHERE user_fk= '" + _user_id + "'");
 
+    if(mysql_query(_server->connection(), query.c_str()))
+    {
+        _server->log("Failed to push a toggle on the encryption for user");
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
 }
 
