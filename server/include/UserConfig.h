@@ -26,8 +26,8 @@
 // These types and the defines above are solely for
 // the purposes of readability and data accuracy
 
-typedef std::string logout_t[6];
-typedef std::string theme_t[4];
+std::string logouts[6] = {"120", "300", "600", "2600", "86400", "never"};
+std::string themes[4] = {"blue", "green", "red", "purple"};
 
 typedef struct
 {
