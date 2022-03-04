@@ -46,7 +46,7 @@ class UserConfig
            _server(connection)
            { };
 
-        inline configurations_t pull_configs();
+        configurations_t        pull_configs();
         unsigned int            init_configs();
         unsigned int            push_logout_period(std::string period);
         unsigned int            push_theme(std::string theme_color);
