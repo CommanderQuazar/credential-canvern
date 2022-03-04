@@ -97,7 +97,7 @@ unsigned int UserConfig::push_theme(std::string theme_color)
 unsigned int UserConfig::toggle_encryption()
 {
     std::string query ("UPDATE UserConfig SET enable_encryption = "
-                       "NOT boolean_field WHERE user_fk= '" + _user_id + "'");
+                       "NOT enable_encryption WHERE user_fk= '" + _user_id + "'");
 
     if(mysql_query(_server->connection(), query.c_str()))
     {
