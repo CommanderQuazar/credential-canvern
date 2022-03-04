@@ -37,8 +37,6 @@ class UserAccount
     private:
         target_user_t     _user_id;
         SqlConnector *    _server;
-
-
 };
 
 #endif //CREDENTIAL_CAVERN_SERVER_INCLUDE_USERACCOUNT_H_
