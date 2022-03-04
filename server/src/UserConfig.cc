@@ -38,6 +38,7 @@ unsigned int UserConfig::init_configs()
         _server->log("SERVER ERROR: Could not push a config row for user: " + _user_id);
         return EXIT_FAILURE;
     }
+    _server->log("Successfully initialized the config row for user: '" + _user_id + "'");
     return EXIT_SUCCESS;
 }
 
@@ -56,7 +57,8 @@ configurations_t UserConfig::pull_configs()
     MYSQL_RES * mysqlResult = mysql_store_result(_server->connection());
     MYSQL_ROW userConfigRow = mysql_fetch_row(mysqlResult);
 
-    return { userConfigRow[1], userConfigRow[2], userConfigRow[3], true};
+    _server->log("Successfully pulled the config row for user: '" + _user_id + "'");
+    return { (bool) userConfigRow[1], userConfigRow[2], userConfigRow[3], true};
 }
 
 /*
@@ -72,6 +74,7 @@ unsigned int UserConfig::push_logout_period(std::string period)
         _server->log("Failed to push a new logout period");
         return EXIT_FAILURE;
     }
+    _server->log("Successfully pushed a new logout period");
     return EXIT_SUCCESS;
 }
 
@@ -88,6 +91,7 @@ unsigned int UserConfig::push_theme(std::string theme_color)
         _server->log("Failed to push a new theme");
         return EXIT_FAILURE;
     }
+    _server->log("Successfully pushed a new theme");
     return EXIT_SUCCESS;
 }
 
@@ -104,6 +108,7 @@ unsigned int UserConfig::toggle_encryption()
         _server->log("Failed to push a toggle on the encryption for user");
         return EXIT_FAILURE;
     }
+    _server->log("Successfully toggled encryption");
     return EXIT_SUCCESS;
 }
 
