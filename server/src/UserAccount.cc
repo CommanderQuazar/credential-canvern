@@ -77,7 +77,7 @@ inline bool UserAccount::remove()
  * empty and the flag will be set to false. Otherwise the
  * data will be returned and the flag will be set to true.
  */
-credential_t UserAccount::mysql_get_credentials()
+credential_t UserAccount::pull_credentials()
 {
     std::string query ("SELECT * FROM Users WHERE user_id= '" + _user_id + "'");
     if(mysql_query(_server->connection(), query.c_str()))

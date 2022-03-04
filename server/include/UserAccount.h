@@ -29,7 +29,7 @@ class UserAccount
 
         bool            reset_usern(const std::string& new_usern);
         bool            reset_pass(const std::string& new_passph);
-        credential_t    mysql_get_credentials();
+        credential_t    pull_credentials();
         inline bool     remove();
 
         ~UserAccount() = default;
