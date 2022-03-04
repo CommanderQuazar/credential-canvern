@@ -18,7 +18,8 @@ unsigned int UserConfig::init_configs()
 
     if(mysql_query(_server->connection(), query.c_str()))
     {
-        _server->log("SERVER ERROR: Could not process id search");
+        _server->log("SERVER ERROR: Could not pull an id search");
+        return EXIT_FAILURE;
     }
 
     MYSQL_RES * mysqlResult = mysql_store_result(_server->connection());
@@ -27,8 +28,17 @@ unsigned int UserConfig::init_configs()
         _server->log("FAILED: User '" + _user_id + "' already exists");
         return EXIT_FAILURE;
     }
+
+    // Inits with default account values
     query = "INSERT INTO UserConfig (enable_encryption, logout_period, "
-                       "theme_color, user_fk) VALUES ( )";
+            "theme_color, user_fk) VALUES (1, '300', 'blue', " + _user_id + ")";
+
+    if(mysql_query(_server->connection(), query.c_str()))
+    {
+        _server->log("SERVER ERROR: Could not initiate a config row for user: " + _user_id);
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
 }
 
 /*
