@@ -8,6 +8,8 @@
 #ifndef CREDENTIAL_CAVERN_SERVER_INCLUDE_USERCONFIG_H_
 #define CREDENTIAL_CAVERN_SERVER_INCLUDE_USERCONFIG_H_
 
+#include <utility>
+
 #include "SqlConnector.h"
 #include "User.h"
 
@@ -26,8 +28,8 @@
 // These types and the defines above are solely for
 // the purposes of readability and data accuracy
 
-static std::string logouts[6] = {"120", "300", "600", "2600", "86400", "never"};
-static std::string themes[4] = {"blue", "green", "red", "purple"};
+const std::string logouts[6] = {"120", "300", "600", "2600", "86400", "never"};
+const std::string themes[4] = {"blue", "green", "red", "purple"};
 
 typedef struct
 {
@@ -42,7 +44,7 @@ class UserConfig
     public:
         UserConfig() = delete;
         UserConfig(SqlConnector * connection, target_user_t user_table_id) :
-           _user_id(user_table_id),
+           _user_id(std::move(user_table_id)),
            _server(connection)
            { };
 

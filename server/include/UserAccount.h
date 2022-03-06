@@ -8,6 +8,8 @@
 #ifndef CREDENTIAL_CAVERN_SERVER_INCLUDE_USERACCOUNT_H_
 #define CREDENTIAL_CAVERN_SERVER_INCLUDE_USERACCOUNT_H_
 
+#include <utility>
+
 #include "SqlConnector.h"
 #include "User.h"
 
@@ -24,7 +26,7 @@ class UserAccount
         UserAccount() = delete;
         UserAccount(SqlConnector * my_sql_connection, target_user_t user_table_id) :
             _server(my_sql_connection),
-            _user_id(user_table_id)
+            _user_id(std::move(user_table_id))
             { };
 
         unsigned int            reset_usern(const std::string& new_usern);
