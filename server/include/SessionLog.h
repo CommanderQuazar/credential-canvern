@@ -12,8 +12,13 @@
 #include "../include/SqlConnector.h"
 #include "../include/User.h"
 #include <map>
+#include <unistd.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
 typedef std::map<std::string, std::string> session_log_t;
+typedef std::pair<std::string, std::string> host_t;
 
 class SessionLog
 {
@@ -33,6 +38,9 @@ class SessionLog
     private:
         target_user_t   _user_id;
         SqlConnector *  _server;
+
+        host_t get_host_info();
+
 };
 
 
