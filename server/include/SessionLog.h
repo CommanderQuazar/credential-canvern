@@ -17,8 +17,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-typedef std::map<std::string, std::string> session_log_t;
-typedef std::pair<std::string, std::string> host_t;
+typedef std::map<std::string, std::string>  session_log_t;
+typedef std::pair<std::string, std::string> host_t;         // Order: host, ip address
 
 class SessionLog
 {

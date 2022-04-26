@@ -77,10 +77,18 @@ unsigned int SessionLog::push_login()
         return EXIT_FAILURE;
     }
 
-    // Get the user's ip
-
+    // Get the user's ip and host name
+    host_t host_info = get_host_info();
 
     // Push data to mysql table
+    query = "INSERT INTO SessionLog (host_name, logged_ip, logged_datetime) VALUES (" + host_info.first + ", "
+            + host_info.second + ")";
+    if(mysql_query(_server->connection(), query.c_str()))
+    {
+        _server->log("SERVER ERROR: Could not push the session to the table");
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
 }
 
 /*
@@ -88,7 +96,15 @@ unsigned int SessionLog::push_login()
  */
 unsigned int SessionLog::clear_logins()
 {
-    return 0;
+    std::string query ("REMOVE * FROM SessionLog");
+
+    if(mysql_query(_server->connection(), query.c_str()))
+    {
+        _server->log("SERVER ERROR: Could not clear logged sessions");
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
 }
 
 /*

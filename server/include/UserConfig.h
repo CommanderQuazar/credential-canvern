@@ -54,7 +54,6 @@ class UserConfig
         unsigned int            push_theme(std::string theme_color);
         unsigned int            toggle_encryption();
 
-
     private:
         target_user_t       _user_id;
         SqlConnector *      _server;
