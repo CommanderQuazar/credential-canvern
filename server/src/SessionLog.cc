@@ -75,7 +75,6 @@ unsigned int SessionLog::push_login()
     // Push data to mysql table
     std::string query = "INSERT INTO SessionLog (hostname, logged_ip, user_fk) VALUES ('" + host_info.first + "', '"
             + host_info.second + "', " + _user_id + ")";
-    std::cout << query << std::endl;
     if(mysql_query(_server->connection(), query.c_str()))
     {
         _server->log("SERVER ERROR: Could not push the session to the table");
