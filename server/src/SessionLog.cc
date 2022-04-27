@@ -78,7 +78,6 @@ unsigned int SessionLog::push_login()
     std::cout << query << std::endl;
     if(mysql_query(_server->connection(), query.c_str()))
     {
-        std::cout << mysql_error(_server->connection()) << std::endl;
         _server->log("SERVER ERROR: Could not push the session to the table");
         return EXIT_FAILURE;
     }
@@ -90,10 +89,12 @@ unsigned int SessionLog::push_login()
  */
 unsigned int SessionLog::clear_logins()
 {
-    std::string query ("REMOVE * FROM SessionLog");
+    std::string query ("DELETE FROM SessionLog");
 
     if(mysql_query(_server->connection(), query.c_str()))
     {
+        std::cout << mysql_error(_server->connection()) << std::endl;
+
         _server->log("SERVER ERROR: Could not clear logged sessions");
         return EXIT_FAILURE;
     }
