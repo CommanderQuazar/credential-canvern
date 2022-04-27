@@ -69,22 +69,16 @@ host_t SessionLog::get_host_info()
  */
 unsigned int SessionLog::push_login()
 {
-    // Checks to see of user id exists
-    std::string query ("SELECT * FROM Users WHERE user_id= '" + _user_id + "'");
-    if(mysql_query(_server->connection(), query.c_str()))
-    {
-        _server->log("SERVER ERROR: Could not pull a user account with id: " + _user_id);
-        return EXIT_FAILURE;
-    }
-
     // Get the user's ip and host name
     host_t host_info = get_host_info();
 
     // Push data to mysql table
-    query = "INSERT INTO SessionLog (host_name, logged_ip, logged_datetime) VALUES (" + host_info.first + ", "
-            + host_info.second + ")";
+    std::string query = "INSERT INTO SessionLog (hostname, logged_ip, user_fk) VALUES ('" + host_info.first + "', '"
+            + host_info.second + "', " + _user_id + ")";
+    std::cout << query << std::endl;
     if(mysql_query(_server->connection(), query.c_str()))
     {
+        std::cout << mysql_error(_server->connection()) << std::endl;
         _server->log("SERVER ERROR: Could not push the session to the table");
         return EXIT_FAILURE;
     }
@@ -103,7 +97,6 @@ unsigned int SessionLog::clear_logins()
         _server->log("SERVER ERROR: Could not clear logged sessions");
         return EXIT_FAILURE;
     }
-
     return EXIT_SUCCESS;
 }
 

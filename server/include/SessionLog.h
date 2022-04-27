@@ -21,6 +21,7 @@
 #define HOST        1
 #define IP          2
 
+
 typedef std::pair<std::string, std::string> host_t;         // Order: host, ip address
 typedef std::map<std::string, host_t>  session_log_t;
 
