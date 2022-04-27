@@ -110,9 +110,27 @@ unsigned int SessionLog::clear_logins()
 /*
  * Returns a session_log_t that holds ALL login entries
  * to the user's account (time) & (ip address)
+ *
+ * If error is encountered an empty map is returned
  */
 session_log_t SessionLog::pull_logins()
 {
+    session_log_t logons;
+    std::string query ("SELECT * FROM SessionLog");
+    if(mysql_query(_server->connection(), query.c_str()))
+    {
+        _server->log("SERVER ERROR: Could not find a valid session logs");
+        return logons;
+    }
 
+    MYSQL_RES * mysqlResult = mysql_store_result(_server->connection());
+    MYSQL_ROW userConfigRow = mysql_fetch_row(mysqlResult);
 
+    // Read the all rows into the map
+    for(int i = 0; i != mysql_num_fields(mysqlResult); ++i)
+    {
+        logons[userConfigRow[TIME_DATE]] = {userConfigRow[TIME_DATE],
+                                            {userConfigRow[HOST], userConfigRow[IP]}};
+    }
+    return logons;
 }
