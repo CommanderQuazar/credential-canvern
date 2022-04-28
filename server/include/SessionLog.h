@@ -17,7 +17,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#define TIME_DATE   0
+#define TIME_DATE   3
 #define HOST        1
 #define IP          2
 
