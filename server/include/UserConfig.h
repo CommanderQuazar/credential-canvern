@@ -28,8 +28,8 @@
 // These types and the defines above are solely for
 // the purposes of readability and data accuracy
 
-const std::string logouts[6] = {"120", "300", "600", "2600", "86400", "never"};
-const std::string themes[4] = {"blue", "green", "red", "purple"};
+const std::string logouts[6]    = {"120", "300", "600", "2600", "86400", "never"};
+const std::string themes[4]     = {"blue", "green", "red", "purple"};
 
 typedef struct
 {
