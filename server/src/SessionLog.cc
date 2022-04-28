@@ -73,8 +73,8 @@ unsigned int SessionLog::push_login()
     host_t host_info = get_host_info();
 
     // Push data to mysql table
-    std::string query = "INSERT INTO SessionLog (host_name, logged_ip, logged_datetime) VALUES (" + host_info.first + ", "
-            + host_info.second + ")";
+    std::string query = "INSERT INTO SessionLog (hostname, logged_ip, user_fk) VALUES ('" + host_info.first + "', '"
+            + host_info.second + "', " + _user_id + ")";
     if(mysql_query(_server->connection(), query.c_str()))
     {
         _server->log("SERVER ERROR: Could not push the session to the table");
@@ -88,20 +88,21 @@ unsigned int SessionLog::push_login()
  */
 unsigned int SessionLog::clear_logins()
 {
-    std::string query ("REMOVE * FROM SessionLog");
+    std::string query ("DELETE FROM SessionLog");
 
     if(mysql_query(_server->connection(), query.c_str()))
     {
         _server->log("SERVER ERROR: Could not clear logged sessions");
         return EXIT_FAILURE;
     }
-
     return EXIT_SUCCESS;
 }
 
 /*
  * Returns a session_log_t that holds ALL login entries
  * to the user's account (time) & (ip address)
+ *
+ * If error is encountered an empty map is returned
  */
 session_log_t SessionLog::pull_logins()
 {
