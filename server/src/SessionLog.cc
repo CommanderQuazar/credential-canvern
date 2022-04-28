@@ -69,19 +69,11 @@ host_t SessionLog::get_host_info()
  */
 unsigned int SessionLog::push_login()
 {
-    // Checks to see of user id exists
-    std::string query ("SELECT * FROM Users WHERE user_id= '" + _user_id + "'");
-    if(mysql_query(_server->connection(), query.c_str()))
-    {
-        _server->log("SERVER ERROR: Could not pull a user account with id: " + _user_id);
-        return EXIT_FAILURE;
-    }
-
     // Get the user's ip and host name
     host_t host_info = get_host_info();
 
     // Push data to mysql table
-    query = "INSERT INTO SessionLog (host_name, logged_ip, logged_datetime) VALUES (" + host_info.first + ", "
+    std::string query = "INSERT INTO SessionLog (host_name, logged_ip, logged_datetime) VALUES (" + host_info.first + ", "
             + host_info.second + ")";
     if(mysql_query(_server->connection(), query.c_str()))
     {
