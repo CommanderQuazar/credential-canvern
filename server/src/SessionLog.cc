@@ -69,12 +69,20 @@ host_t SessionLog::get_host_info()
  */
 unsigned int SessionLog::push_login()
 {
+    // Checks to see of user id exists
+    std::string query ("SELECT * FROM Users WHERE user_id= '" + _user_id + "'");
+    if(mysql_query(_server->connection(), query.c_str()))
+    {
+        _server->log("SERVER ERROR: Could not pull a user account with id: " + _user_id);
+        return EXIT_FAILURE;
+    }
+
     // Get the user's ip and host name
     host_t host_info = get_host_info();
 
     // Push data to mysql table
-    std::string query = "INSERT INTO SessionLog (hostname, logged_ip, user_fk) VALUES ('" + host_info.first + "', '"
-            + host_info.second + "', " + _user_id + ")";
+    query = "INSERT INTO SessionLog (host_name, logged_ip, logged_datetime) VALUES (" + host_info.first + ", "
+            + host_info.second + ")";
     if(mysql_query(_server->connection(), query.c_str()))
     {
         _server->log("SERVER ERROR: Could not push the session to the table");
@@ -88,23 +96,20 @@ unsigned int SessionLog::push_login()
  */
 unsigned int SessionLog::clear_logins()
 {
-    std::string query ("DELETE FROM SessionLog");
+    std::string query ("REMOVE * FROM SessionLog");
 
     if(mysql_query(_server->connection(), query.c_str()))
     {
-        std::cout << mysql_error(_server->connection()) << std::endl;
-
         _server->log("SERVER ERROR: Could not clear logged sessions");
         return EXIT_FAILURE;
     }
+
     return EXIT_SUCCESS;
 }
 
 /*
  * Returns a session_log_t that holds ALL login entries
  * to the user's account (time) & (ip address)
- *
- * If error is encountered an empty map is returned
  */
 session_log_t SessionLog::pull_logins()
 {
@@ -117,13 +122,12 @@ session_log_t SessionLog::pull_logins()
     }
 
     MYSQL_RES * mysqlResult = mysql_store_result(_server->connection());
-    MYSQL_ROW userConfigRow = mysql_fetch_row(mysqlResult);
+    MYSQL_ROW userConfigRow;
 
     // Read the all rows into the map
-    for(int i = 0; i != mysql_num_fields(mysqlResult); ++i)
+    while((userConfigRow = mysql_fetch_row(mysqlResult)))
     {
-        logons[userConfigRow[TIME_DATE]] = {userConfigRow[TIME_DATE],
-                                            {userConfigRow[HOST], userConfigRow[IP]}};
+        logons[userConfigRow[TIME_DATE]] = {userConfigRow[HOST], userConfigRow[IP]};
     }
     return logons;
 }
