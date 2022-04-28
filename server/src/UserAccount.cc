@@ -25,6 +25,7 @@ unsigned int UserAccount::reset_usern(const std::string& new_usern)
     {
         _server->log("FAILED: Unsuccessful change of username: "
                      "username already exists in this database");
+        mysql_free_result(mysqlResult);
         return EXIT_FAILURE;
     }
 
@@ -32,9 +33,11 @@ unsigned int UserAccount::reset_usern(const std::string& new_usern)
     if(mysql_query(_server->connection(), query.c_str()))
     {
         _server->log("SERVER ERROR: Could not push the username to: " + new_usern);
+        mysql_free_result(mysqlResult);
         return false;
     }
     _server->log("User '" + _user_id + "' username has been updated to: " + new_usern);
+    mysql_free_result(mysqlResult);
     return EXIT_SUCCESS;
 }
 
@@ -93,10 +96,12 @@ credential_t UserAccount::pull_credentials()
     if(mysql_num_rows(mysqlResult) == 0)
     {
         _server->log("SERVER ERROR: Could not find a user account with id: " + _user_id);
+        mysql_free_result(mysqlResult);
         return {"", "", false};
     }
 
     std::string usern (userAccount[USERN]);
     _server->log("Credentials for user '" + usern + "' sent");
+    mysql_free_result(mysqlResult);
     return {usern, userAccount[PASSPH], true};
 }

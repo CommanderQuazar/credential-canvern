@@ -22,6 +22,7 @@ creation_status_e User::create()
     {
         _server->log("FAILED: Unsuccessful creation of user: "
                      "username already exists in this database");
+        mysql_free_result(mysqlResult);
         return BAD_USERN;
     }
     else
@@ -33,9 +34,11 @@ creation_status_e User::create()
         if(mysql_query(_server->connection(), query.c_str()))
         {
             _server->log("SERVER ERROR: Adding a new user has failed");
+            mysql_free_result(mysqlResult);
             return SERVER_FAULT;
         }
         _server->log("Created new user: " + _entry_usern);
+        mysql_free_result(mysqlResult);
         return SUCCESS;
     }
 }
@@ -63,6 +66,7 @@ User& User::login()
     if(mysql_num_rows(mysqlResult) == 0)
     {
         _server->log("FAILED: No user found with provided username or password");
+        mysql_free_result(mysqlResult);
         return *this;
     }
 
@@ -70,6 +74,7 @@ User& User::login()
     MYSQL_ROW row = mysql_fetch_row(mysqlResult);
     _u_table_id = row[ID];
     _server->log("Logged in to account: " + _entry_usern);
+    mysql_free_result(mysqlResult);
     return *this;
 }
 

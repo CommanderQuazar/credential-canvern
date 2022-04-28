@@ -26,6 +26,7 @@ unsigned int UserConfig::init_configs()
     if(mysql_num_rows(mysqlResult) >= 1)
     {
         _server->log("FAILED: User '" + _user_id + "' already exists");
+        mysql_free_result(mysqlResult);
         return EXIT_FAILURE;
     }
 
@@ -36,9 +37,11 @@ unsigned int UserConfig::init_configs()
     if(mysql_query(_server->connection(), query.c_str()))
     {
         _server->log("SERVER ERROR: Could not push a config row for user: " + _user_id);
+        mysql_free_result(mysqlResult);
         return EXIT_FAILURE;
     }
     _server->log("Successfully initialized the config row for user: '" + _user_id + "'");
+    mysql_free_result(mysqlResult);
     return EXIT_SUCCESS;
 }
 
@@ -58,6 +61,7 @@ configurations_t UserConfig::pull_configs()
     MYSQL_ROW userConfigRow = mysql_fetch_row(mysqlResult);
 
     _server->log("Successfully pulled the config row for user: '" + _user_id + "'");
+    mysql_free_result(mysqlResult);
     return { (bool) userConfigRow[1], userConfigRow[2], userConfigRow[3], true};
 }
 

@@ -122,5 +122,6 @@ session_log_t SessionLog::pull_logins()
     {
         logons[userConfigRow[TIME_DATE]] = {userConfigRow[HOST], userConfigRow[IP]};
     }
+    mysql_free_result(mysqlResult);
     return logons;
 }
