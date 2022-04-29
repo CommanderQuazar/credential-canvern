@@ -11,7 +11,16 @@
 #include <map>
 
 enum recd_e {PASSWORD, BANK_ACCOUNT, PAYMENT_CARD, DATABASE_LOGIN, SSH_KEYS, SOFTWARE_LICENSE};
-//typedef std::map<>
+
+typedef struct
+{
+    recd_e      type;
+    std::string create_date;
+    //more data
+
+}record_s;
+
+typedef std::map<std::string, record_s> record_t;
 
 class Records
 {
@@ -25,8 +34,8 @@ class Records
         unsigned int add_record();
         unsigned int remove_record();
 
-         sql_get_all_records();
-         sql_get_searched(const std::string& search_quary);
+        record_t sql_get_all_records();
+        record_t sql_get_searched(const std::string& search_quary);
 
         unsigned int sort_by_date();
         unsigned int sort_by_type();
